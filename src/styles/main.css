@@ -1871,10 +1871,11 @@ a {
   background: transparent;
 }
 
-/* Compact USD / EUR Currency Switcher */
+/* Compact USD / EUR / BDT Currency Switcher */
 .order-price-row {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 14px;
   margin-top: 8px;
 }
@@ -1897,6 +1898,7 @@ a {
 .currency-toggle {
   display: inline-flex;
   align-items: center;
+  flex-shrink: 0;
   gap: 2px;
   padding: 3px;
   border-radius: var(--radius-pill);
@@ -1906,6 +1908,10 @@ a {
 
 .currency-toggle-sm {
   background: var(--bg);
+}
+
+.currency-toggle-sm .currency-btn {
+  padding: 4px 8px;
 }
 
 .currency-btn {

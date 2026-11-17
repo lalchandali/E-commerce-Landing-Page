@@ -10,6 +10,7 @@ import { ProductArtwork } from './components/ProductArtwork';
 import { TestimonialsSection } from './components/TestimonialsSection';
 import { ToastContainer, type ToastItem } from './components/ToastContainer';
 import {
+  CURRENCY_OPTIONS,
   FINISH_META,
   SIZE_OPTIONS,
   convertUnitPrice,
@@ -570,11 +571,13 @@ export default function App() {
   const updateCurrency = (next: CurrencyCode) => {
     if (next === currency) return;
     setCurrency(next);
-    showToast(
-      `Prices switched to ${next}`,
-      next === 'EUR' ? 'Converted from USD base pricing' : 'Showing US Dollar pricing',
-      'info'
-    );
+    const detail =
+      next === 'EUR'
+        ? 'Converted to Euro (€) from USD base pricing'
+        : next === 'BDT'
+          ? 'Converted to Bangladeshi Taka (৳) from USD base pricing'
+          : 'Showing US Dollar pricing';
+    showToast(`Prices switched to ${next}`, detail, 'info');
   };
 
   const addItemToBag = (
@@ -732,7 +735,7 @@ export default function App() {
         >
           <div className="container promo-banner-inner">
             <p className="promo-banner-text">
-              <span>Free shipping on orders over $45</span>
+              <span>Free shipping on orders over {formatPrice(45, currency)}</span>
               <span className="promo-sep" aria-hidden="true">
                 ·
               </span>
@@ -1417,7 +1420,7 @@ export default function App() {
                   role="group"
                   aria-label="Display currency"
                 >
-                  {(['USD', 'EUR'] as CurrencyCode[]).map((code) => (
+                  {CURRENCY_OPTIONS.map((code) => (
                     <button
                       key={code}
                       type="button"
@@ -1868,7 +1871,7 @@ export default function App() {
                 role="group"
                 aria-label="Bag currency"
               >
-                {(['USD', 'EUR'] as CurrencyCode[]).map((code) => (
+                {CURRENCY_OPTIONS.map((code) => (
                   <button
                     key={code}
                     type="button"

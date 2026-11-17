@@ -1,22 +1,29 @@
 export type FinishId = 'sage' | 'basalt' | 'glacier';
 export type SizeLabel = '750 ml' | '950 ml' | '1.2 L';
 export type ProductCategory = 'Hydration' | 'Camp & Brew' | 'Accessories';
-export type CurrencyCode = 'USD' | 'EUR';
+export type CurrencyCode = 'USD' | 'EUR' | 'BDT';
 
+export const CURRENCY_OPTIONS: CurrencyCode[] = ['USD', 'EUR', 'BDT'];
 export const EUR_PER_USD = 0.92;
+export const BDT_PER_USD = 120;
 
 export function convertUnitPrice(
   usdPrice: number,
   currency: CurrencyCode
 ): number {
-  return currency === 'EUR' ? Math.round(usdPrice * EUR_PER_USD) : usdPrice;
+  if (currency === 'EUR') return Math.round(usdPrice * EUR_PER_USD);
+  if (currency === 'BDT') return Math.round(usdPrice * BDT_PER_USD);
+  return usdPrice;
 }
 
 export function formatConvertedAmount(
   amount: number,
   currency: CurrencyCode
 ): string {
-  return currency === 'EUR' ? `€${amount}` : `$${amount}`;
+  const formatted = amount.toLocaleString('en-US');
+  if (currency === 'EUR') return `€${formatted}`;
+  if (currency === 'BDT') return `৳${formatted}`;
+  return `$${formatted}`;
 }
 
 export function formatPrice(usdPrice: number, currency: CurrencyCode): string {
